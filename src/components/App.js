@@ -7,18 +7,28 @@ const API = "http://localhost:3001/sushis";
 function App() {
 
 const [sushi, setSushi] = useState([])
+const [page, setPage] = useState(0)
 
   useEffect( () => {
     fetch(API)
     .then(res => res.json())
-    .then(data => setSushi(data))
-  }, [])
+    .then(data => setSushi(data.slice(page, page + 4)))
+  }, [page])
 
-  console.log(sushi);
+  function onDelete(id) {
+    const filteredSushi = sushi.filter(item => {
+      return item.id !== id
+    })
+    setSushi(filteredSushi)
+  }
+
+  function handlePagination() {
+    setPage(prevPage => prevPage + 1)
+  }
 
   return (
     <div className="app">
-      <SushiContainer sushi={sushi} />
+      <SushiContainer sushi={sushi} onDelete={onDelete} handlePagination={handlePagination} />
       <Table />
     </div>
   );

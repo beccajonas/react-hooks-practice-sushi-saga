@@ -2,21 +2,16 @@ import React from "react";
 import MoreButton from "./MoreButton";
 import Sushi from "./Sushi"
 
-function SushiContainer({ sushi }) {
+function SushiContainer({ sushi, onDelete, handlePagination }) {
 
-  const renderSushi = sushi.map(sushi => {
-    <Sushi 
-      name={sushi.name}
-      img_url={sushi.img_url} 
-      price={sushi.price}
-      created_at={sushi.created_at} 
-    />
-  })
+  const renderSushi = sushi.map(sushi => 
+    <Sushi key={sushi.id} sushi={sushi} onDelete={onDelete} />
+  )
 
   return (
     <div className="belt">
       {renderSushi}
-      <MoreButton />
+      <MoreButton handlePagination={handlePagination} />
     </div>
   );
 }
