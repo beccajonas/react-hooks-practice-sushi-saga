@@ -4,18 +4,21 @@ import Table from "./Table";
 
 const API = "http://localhost:3001/sushis";
 
-
 function App() {
+
+const [sushi, setSushi] = useState([])
 
   useEffect( () => {
     fetch(API)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => setSushi(data))
   }, [])
+
+  console.log(sushi);
 
   return (
     <div className="app">
-      <SushiContainer />
+      <SushiContainer sushi={sushi} />
       <Table />
     </div>
   );
